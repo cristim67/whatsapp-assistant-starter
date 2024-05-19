@@ -1,13 +1,11 @@
 import {GenezioDeploy, GenezioHttpRequest, GenezioHttpResponse, GenezioMethod} from "@genezio/types";
 import axios from "axios";
-import {GptWorker} from "./gptWorker";
 
 @GenezioDeploy()
 export class BackendService {
   GRAPH_API_TOKEN = process.env.GRAPH_API_TOKEN;
   WEBHOOK_VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN;
   BUSINESS_PHONE_NUMBER_ID = process.env.BUSINESS_PHONE_NUMBER_ID;
-  GPT_WORKER = new GptWorker();
 
   constructor() {
     if (!this.GRAPH_API_TOKEN || !this.WEBHOOK_VERIFY_TOKEN || !this.BUSINESS_PHONE_NUMBER_ID) {
@@ -66,22 +64,7 @@ export class BackendService {
 
       const body = request.body.entry[0].changes[0].value.messages[0].text.body; // Message received
 
-
-      const response = await this.GPT_WORKER.generateResponse(body);
-      if (!response) {
-        return {
-          headers: {"Content-Type": "application/json"},
-          statusCode: "200",
-          body: "Message not handled"
-        }
-      }
-      await this.#sendMessage(response, request.body.entry[0].changes[0].value.messages[0].from)
-
-      return {
-        headers: {"Content-Type": "application/json"},
-        statusCode: "200",
-        body: "Message sent"
-      }
+      // TODO: Insert code here
 
     } catch (error) {
       console.error(error)
