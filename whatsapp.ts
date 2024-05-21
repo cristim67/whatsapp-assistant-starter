@@ -15,6 +15,9 @@ export class BackendService {
     }
   }
 
+  @GenezioMethod({type: "http"})
+  async webhook(request: GenezioHttpRequest): Promise<GenezioHttpResponse> {}
+  
   async #sendMessage(message: string, phone: string): Promise<boolean> {
     try {
       console.log("Sending message to", phone)
@@ -41,7 +44,4 @@ export class BackendService {
       return false
     }
   }
-
-  @GenezioMethod({type: "http"})
-  async webhook(request: GenezioHttpRequest): Promise<GenezioHttpResponse> {}
 }
