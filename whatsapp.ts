@@ -41,38 +41,5 @@ export class BackendService {
   }
 
   @GenezioMethod({type: "http"})
-  async webhook(request: GenezioHttpRequest): Promise<GenezioHttpResponse> {
-    try {
-      if (request.queryStringParameters !== undefined) {
-        // Webhook verification by WhatsApp Business API
-        const mode = request.queryStringParameters["hub.mode"];
-        const token = request.queryStringParameters["hub.verify_token"];
-        const challenge = request.queryStringParameters["hub.challenge"];
-        if (mode === "subscribe" && token === this.WEBHOOK_VERIFY_TOKEN) {
-          console.log("Webhook verified successfully!");
-          return {
-            headers: {"Content-Type": "application/json"},
-            statusCode: "200",
-            body: challenge
-          }
-        } else return {
-          headers: {"Content-Type": "application/json"},
-          statusCode: "403",
-          body: "Forbidden"
-        }
-      }
-
-      const body = request.body.entry[0].changes[0].value.messages[0].text.body; // Message received
-
-      // TODO: Insert code here
-
-    } catch (error) {
-      console.error(error)
-      return {
-        headers: {"Content-Type": "application/json"},
-        statusCode: "500",
-        body: "Internal server error"
-      }
-    }
-  }
+  async webhook(request: GenezioHttpRequest): Promise<GenezioHttpResponse> {}
 }
